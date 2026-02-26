@@ -43,7 +43,7 @@ function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-[#101010] bg-card/95 backdrop-blur-sm">
       <div className="max-w-[1200px] mx-auto px-5 h-full flex items-center justify-between gap-5">
         <a href="./" className="shrink-0 flex items-center">
-          <img src={pandaLogo} alt="PANDA Terminal" className="h-7 w-auto" />
+          <img src={pandaLogo} alt="PANDA Terminal" className="h-11 w-auto" />
         </a>
 
         <div className="hidden md:flex items-center gap-6 text-[14px] text-ink">
@@ -1307,6 +1307,142 @@ function TermsOfServicePage() {
   )
 }
 
+function PrivacyPolicyPage() {
+  return (
+    <main className="pt-28 pb-20 px-5">
+      <section className="max-w-[920px] mx-auto border border-grid bg-card">
+        <div className="border-b border-grid px-6 sm:px-8 py-5">
+          <p className="label-micro text-accent mb-2">Legal</p>
+          <h1 className="text-[26px] sm:text-[34px] leading-tight font-medium text-ink tracking-tight mb-2">
+            Privacy Policy
+          </h1>
+          <p className="text-[14px] text-ink-secondary">
+            How PANDA Terminal collects, uses, stores, and shares personal data.
+          </p>
+        </div>
+
+        <article className="px-6 sm:px-8 py-7 space-y-8 text-[14px] text-ink-secondary leading-relaxed">
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">1. Introduction</h2>
+            <p>
+              PANDA Terminal provides tools that allow users to manage cryptocurrency holdings, including API-based
+              software services. This Notice explains how we process personal data when you use our website, app,
+              account services, support channels, and marketing communications.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">2. Data Controller</h2>
+            <p>
+              PANDA Terminal is the controller for the processing described in this Notice. For privacy inquiries or
+              to exercise your rights, contact:
+              <a href="mailto:support@pandaterminal.com" className="text-accent hover:text-accent-hover transition-colors ml-1">
+                support@pandaterminal.com
+              </a>
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">3. Categories of Personal Data</h2>
+            <p>Depending on your use of the platform, we may process:</p>
+            <ul className="mt-3 space-y-2 list-disc pl-5 marker:text-accent">
+              <li>Main account data (name, email, user ID, legal entity details where relevant).</li>
+              <li>Billing data (payment details, wallet addresses, invoice preferences, payment checks).</li>
+              <li>Transaction data (API credentials, exchange account metadata, order/transaction details).</li>
+              <li>Communication data (message content, platform username, timestamps, conversation IDs).</li>
+              <li>Marketing data (consents, campaign attribution, engagement, analytics identifiers).</li>
+              <li>Technical and usage data (IP, device/browser metadata, logs, actions, visited pages).</li>
+              <li>Cookie data used for product optimization and analytics.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">4. Purposes and Legal Bases</h2>
+            <p>We process personal data to:</p>
+            <ul className="mt-3 space-y-2 list-disc pl-5 marker:text-accent">
+              <li>Provide and operate the service agreement (account creation, payments, core functionality).</li>
+              <li>Maintain and improve services, personalize UX, and protect system security/integrity.</li>
+              <li>Prevent abuse, fraud, misconduct, and comply with legal, regulatory, and law-enforcement requests.</li>
+              <li>Conduct customer support, research, and beta testing.</li>
+              <li>Send direct marketing where consent is required and granted.</li>
+            </ul>
+            <p className="mt-3">
+              Where applicable, processing is based on contract necessity, legitimate interests, legal obligations,
+              and/or your consent.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">5. Data Sharing and Transfers</h2>
+            <p>We may share personal data with:</p>
+            <ul className="mt-3 space-y-2 list-disc pl-5 marker:text-accent">
+              <li>Public authorities and regulators where required by law.</li>
+              <li>Professional advisors (auditors, legal advisors).</li>
+              <li>Group companies and potential acquirers in corporate transactions.</li>
+              <li>Third-party service providers (core infrastructure, payments, analytics, marketing, attribution).</li>
+              <li>Third-party integrations you choose to connect.</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">6. Security</h2>
+            <p>
+              We use reasonable technical and organizational safeguards to protect personal data from unauthorized
+              access, misuse, loss, and unlawful processing. No system is fully immune, so users should also secure
+              their own accounts and devices.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">7. Retention Periods</h2>
+            <p>Typical retention windows include:</p>
+            <ul className="mt-3 space-y-2 list-disc pl-5 marker:text-accent">
+              <li>Financial/transaction-related data: up to 7 years where required.</li>
+              <li>Contract and account-related data: generally up to 3.5 years after termination.</li>
+              <li>Communications: generally up to 3.5 years after closure.</li>
+              <li>Marketing data: typically removed shortly after consent withdrawal or service termination.</li>
+              <li>Technical/usage data: generally short-term operational retention.</li>
+            </ul>
+            <p className="mt-3">
+              Retention may be extended where necessary for legal claims, fraud prevention, or legal obligations.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">8. Your Rights</h2>
+            <p>
+              Subject to applicable law, you may request access, correction, deletion, restriction, portability, or
+              objection to specific processing. You may also withdraw consent where processing relies on consent.
+            </p>
+            <p className="mt-3">
+              You may have the right to complain to a supervisory authority and to request review of significant
+              automated decisions.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">9. External Links</h2>
+            <p>
+              Our services may link to third-party sites and tools. Their privacy practices are governed by their own
+              notices, not this policy.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">10. Contact</h2>
+            <p>
+              For questions, rights requests, or privacy concerns:
+              <a href="mailto:support@pandaterminal.com" className="text-accent hover:text-accent-hover transition-colors ml-1">
+                support@pandaterminal.com
+              </a>
+            </p>
+          </section>
+        </article>
+      </section>
+    </main>
+  )
+}
+
 /* ─── Footer ─── */
 
 function Footer() {
@@ -1327,7 +1463,7 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
           <div className="md:col-span-5">
             <a href="./" className="inline-flex items-center mb-4">
-              <img src={pandaLogo} alt="PANDA Terminal" className="h-7 w-auto" />
+              <img src={pandaLogo} alt="PANDA Terminal" className="h-24 w-auto" />
             </a>
             <p className="text-[14px] text-ink-tertiary max-w-sm leading-relaxed">
               Execution-first infrastructure for modern crypto traders across DEXes, perps, and options venues.
@@ -1343,44 +1479,50 @@ function Footer() {
           <div className="md:col-span-3 space-y-3">
             <p className="label-micro text-ink-tertiary">Legal</p>
             <a href="/termsofservice" className="block text-[14px] text-ink hover:text-ink-secondary transition-colors">Terms of Service</a>
-            <a href="./privacy-policy" className="block text-[14px] text-ink hover:text-ink-secondary transition-colors">Privacy Policy</a>
+            <a href="/privacy-policy" className="block text-[14px] text-ink hover:text-ink-secondary transition-colors">Privacy Policy</a>
           </div>
 
           <div className="md:col-span-2 space-y-3">
             <p className="label-micro text-ink-tertiary">Social</p>
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               <a
                 href="https://x.com/pandaterminal"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 text-[13px] text-ink-tertiary hover:text-ink transition-colors"
+                className="flex items-center gap-3 text-[14px] text-ink-secondary hover:text-ink transition-colors"
               >
-                <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4 h-4 fill-current">
-                  <path d="M18.901 1H22l-6.764 7.73L23.2 23h-6.241l-4.889-6.38L6.49 23H3.39l7.233-8.267L.8 1h6.4l4.42 5.816L18.901 1zm-1.094 20.132h1.717L6.266 2.79H4.424l13.383 18.342z" />
-                </svg>
-                X
+                <span className="inline-flex w-5 justify-center">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4.5 h-4.5 fill-current">
+                    <path d="M18.901 1H22l-6.764 7.73L23.2 23h-6.241l-4.889-6.38L6.49 23H3.39l7.233-8.267L.8 1h6.4l4.42 5.816L18.901 1zm-1.094 20.132h1.717L6.266 2.79H4.424l13.383 18.342z" />
+                  </svg>
+                </span>
+                <span>X</span>
               </a>
               <a
                 href="https://t.me/pandaterminal"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 text-[13px] text-ink-tertiary hover:text-ink transition-colors"
+                className="flex items-center gap-3 text-[14px] text-ink-secondary hover:text-ink transition-colors"
               >
-                <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4 h-4 fill-current">
-                  <path d="M9.036 15.804 8.66 21.1c.538 0 .771-.232 1.05-.51l2.52-2.41 5.223 3.825c.958.529 1.633.252 1.892-.882l3.43-16.077.001-.001c.304-1.42-.513-1.976-1.446-1.629L1.333 11.04C-.03 11.569-.01 12.33 1.101 12.673l5.11 1.593L18.11 6.77c.56-.37 1.07-.166.651.204" />
-                </svg>
-                Telegram
+                <span className="inline-flex w-5 justify-center">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4.5 h-4.5 fill-current">
+                    <path d="M9.036 15.804 8.66 21.1c.538 0 .771-.232 1.05-.51l2.52-2.41 5.223 3.825c.958.529 1.633.252 1.892-.882l3.43-16.077.001-.001c.304-1.42-.513-1.976-1.446-1.629L1.333 11.04C-.03 11.569-.01 12.33 1.101 12.673l5.11 1.593L18.11 6.77c.56-.37 1.07-.166.651.204" />
+                  </svg>
+                </span>
+                <span>Telegram</span>
               </a>
               <a
                 href="https://www.linkedin.com/company/panda-terminal"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 text-[13px] text-ink-tertiary hover:text-ink transition-colors"
+                className="flex items-center gap-3 text-[14px] text-ink-secondary hover:text-ink transition-colors"
               >
-                <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4 h-4 fill-current">
-                  <path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5 2.5 2.5 0 0 0 4.98 3.5ZM3 9h4v12H3zM9 9h3.8v1.7h.1c.53-1 1.82-2.06 3.75-2.06C20.4 8.64 21 11.1 21 14.2V21h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.56-2.3 3.17V21H9z" />
-                </svg>
-                LinkedIn
+                <span className="inline-flex w-5 justify-center">
+                  <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4.5 h-4.5 fill-current">
+                    <path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5 2.5 2.5 0 0 0 4.98 3.5ZM3 9h4v12H3zM9 9h3.8v1.7h.1c.53-1 1.82-2.06 3.75-2.06C20.4 8.64 21 11.1 21 14.2V21h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.56-2.3 3.17V21H9z" />
+                  </svg>
+                </span>
+                <span>LinkedIn</span>
               </a>
             </div>
           </div>
@@ -1403,6 +1545,24 @@ export default function App() {
     : '/'
   const isAnnouncementPage = normalizedPath === '/announcement'
   const isTermsPage = normalizedPath === '/termsofservice'
+  const isPrivacyPage = normalizedPath === '/privacy-policy'
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const scrollToHashTarget = () => {
+      if (window.location.hash !== '#waitlist') return
+      // Delay ensures the section is mounted before attempting scroll.
+      window.setTimeout(() => {
+        const target = document.getElementById('waitlist')
+        target?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 0)
+    }
+
+    scrollToHashTarget()
+    window.addEventListener('hashchange', scrollToHashTarget)
+    return () => window.removeEventListener('hashchange', scrollToHashTarget)
+  }, [normalizedPath])
 
   return (
     <div className="min-h-screen bg-canvas text-ink">
@@ -1411,6 +1571,8 @@ export default function App() {
         <AnnouncementPage />
       ) : isTermsPage ? (
         <TermsOfServicePage />
+      ) : isPrivacyPage ? (
+        <PrivacyPolicyPage />
       ) : (
         <>
           <HeroSection />
