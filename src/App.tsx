@@ -222,64 +222,118 @@ function AnnouncementPage() {
   )
 }
 
-/* ─── Typing Terminal ─── */
+/* ─── Agent Work Preview ─── */
 
-const TERMINAL_LINES = [
-  { type: 'cmd', text: '$ panda connect --wallet 0x...a3f7' },
-  { type: 'success', text: '✓ Wallet connected across 12 venues' },
-  { type: 'cmd', text: '$ panda scan --markets perps,spot,options' },
-  { type: 'info', text: '⚡ Scanning 847 pairs · dYdX, GMX, Hyperliquid, Jupiter...' },
-  { type: 'success', text: '✓ Orderflow signals loaded · Funding rates synced' },
-  { type: 'cmd', text: '$ panda execute --ready' },
-  { type: 'cursor', text: 'Awaiting your command...' },
-]
+const AGENT_TASKS = [
+  { title: 'Ingest live venue streams', detail: '12 venues · 847 pairs synced', status: 'done' },
+  { title: 'Compute orderflow imbalance', detail: 'BTC, ETH, SOL signal deltas refreshed', status: 'done' },
+  { title: 'Validate funding + OI regime', detail: 'Perps pressure score: 0.74 (bullish)', status: 'done' },
+  { title: 'Route execution path', detail: 'Best path: Hyperliquid -> Jupiter hedge leg', status: 'done' },
+  { title: 'Run slippage + liquidity guardrails', detail: 'Expected slippage 8.2 bps · within risk limits', status: 'done' },
+  { title: 'Execution agent armed', detail: 'Waiting for trigger confidence > 72%', status: 'running' },
+] as const
+
+const AGENT_STATUS_LINES = [
+  'Parsing live market streams...',
+  'Evaluating venue depth and latency...',
+  'Computing cross-venue execution path...',
+  'Validating risk and slippage guardrails...',
+] as const
+
+type AgentTask = typeof AGENT_TASKS[number]
+type DisplayedTask = {
+  title: string
+  detail: string
+  finalized: boolean
+  status: AgentTask['status']
+}
 
 function TerminalPreview() {
-  const [visibleLines, setVisibleLines] = useState(0)
-  const [charIndex, setCharIndex] = useState(0)
-  const [started, setStarted] = useState(false)
+  const [displayedTasks, setDisplayedTasks] = useState<DisplayedTask[]>([])
+  const [statusLine, setStatusLine] = useState(AGENT_STATUS_LINES[0])
+  const [sequenceComplete, setSequenceComplete] = useState(false)
   const ref = useRef(null)
+  const hasStartedRef = useRef(false)
   const inView = useInView(ref, { once: true, margin: '-100px' })
 
   useEffect(() => {
-    if (inView && !started) setStarted(true)
-  }, [inView, started])
+    if (!inView || hasStartedRef.current) return
+    hasStartedRef.current = true
 
-  const currentLine = TERMINAL_LINES[visibleLines]
-  const isTyping = currentLine && charIndex < currentLine.text.length
-
-  useEffect(() => {
-    if (!started) return
-    if (visibleLines >= TERMINAL_LINES.length) return
-
-    if (isTyping) {
-      const speed = currentLine.type === 'cmd' ? 25 : 12
-      const t = setTimeout(() => setCharIndex((c) => c + 1), speed)
-      return () => clearTimeout(t)
+    let cancelled = false
+    const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+    const updateTask = (index: number, updater: (task: DisplayedTask) => DisplayedTask) => {
+      setDisplayedTasks((prev) => prev.map((task, i) => (i === index ? updater(task) : task)))
     }
 
-    const pause = currentLine.type === 'cmd' ? 400 : 200
-    const t = setTimeout(() => {
-      setVisibleLines((v) => v + 1)
-      setCharIndex(0)
-    }, pause)
-    return () => clearTimeout(t)
-  }, [started, visibleLines, charIndex, isTyping, currentLine])
+    const runSequence = async () => {
+      setDisplayedTasks([])
+      setSequenceComplete(false)
 
-  const colorFor = (type: string) => {
-    switch (type) {
-      case 'cmd': return 'text-ink'
-      case 'success': return 'text-signal-success'
-      case 'info': return 'text-ink-secondary'
-      case 'cursor': return 'text-ink-tertiary'
-      default: return 'text-ink'
+      for (let i = 0; i < AGENT_TASKS.length; i += 1) {
+        if (cancelled) return
+
+        const task = AGENT_TASKS[i]
+        setStatusLine(AGENT_STATUS_LINES[i % AGENT_STATUS_LINES.length])
+        setDisplayedTasks((prev) => [...prev, { title: '', detail: '', finalized: false, status: task.status }])
+
+        for (const ch of task.title) {
+          if (cancelled) return
+          updateTask(i, (current) => ({ ...current, title: current.title + ch }))
+          await sleep(22 + (i % 3) * 4)
+        }
+
+        await sleep(220 + i * 40)
+
+        for (const ch of task.detail) {
+          if (cancelled) return
+          updateTask(i, (current) => ({ ...current, detail: current.detail + ch }))
+          await sleep(12 + (i % 2) * 3)
+        }
+
+        await sleep(160 + (i % 2) * 120)
+        if (cancelled) return
+        updateTask(i, (current) => ({ ...current, finalized: true }))
+      }
+
+      if (!cancelled) {
+        setStatusLine('Execution agent online. Waiting for trigger...')
+        setSequenceComplete(true)
+      }
+    }
+
+    void runSequence()
+    return () => {
+      cancelled = true
+    }
+  }, [inView])
+
+  const toneFor = (status: 'done' | 'running') => {
+    switch (status) {
+      case 'done':
+        return {
+          dot: 'bg-signal-success',
+          badge: 'text-signal-success border-signal-success/30 bg-signal-success/10',
+          label: 'DONE',
+        }
+      case 'running':
+        return {
+          dot: 'bg-accent animate-pulse-dot',
+          badge: 'text-accent border-accent/30 bg-accent/10',
+          label: 'LIVE',
+        }
+      default:
+        return {
+          dot: 'bg-ink-tertiary',
+          badge: 'text-ink-tertiary border-grid bg-subtle',
+          label: 'IDLE',
+        }
     }
   }
 
   return (
     <div ref={ref} className="relative mx-auto max-w-2xl">
       <div className="bg-card border border-grid overflow-hidden">
-        {/* Title bar */}
         <div className="flex items-center justify-between px-4 py-2 border-b border-grid-element">
           <div className="flex items-center gap-4">
             <div className="flex gap-1.5">
@@ -287,30 +341,48 @@ function TerminalPreview() {
               <div className="w-2 h-2 rounded-full bg-signal-warn/50" />
               <div className="w-2 h-2 rounded-full bg-signal-success/50" />
             </div>
-            <span className="font-mono text-[10px] text-ink-tertiary">panda-terminal v2.0</span>
+            <span className="font-mono text-[10px] text-ink-tertiary">agent://panda-exec-v2</span>
           </div>
-          <span className="flex items-center gap-1.5 font-mono text-[10px] text-signal-success">
-            <span className="w-1.5 h-1.5 rounded-full bg-signal-success animate-pulse-dot" />
-            CONNECTED
+          <span className="flex items-center gap-1.5 font-mono text-[10px] text-accent">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse-dot" />
+            AGENT RUNNING
           </span>
         </div>
 
-        {/* Terminal body */}
-        <div className="p-4 sm:p-5 font-mono text-[12px] sm:text-[13px] leading-relaxed space-y-1.5 min-h-[200px] text-left">
-          {TERMINAL_LINES.slice(0, visibleLines).map((line, i) => (
-            <div key={i} className={colorFor(line.type)}>
-              {line.text}
-            </div>
-          ))}
-          {visibleLines < TERMINAL_LINES.length && currentLine && (
-            <div className={colorFor(currentLine.type)}>
-              {currentLine.text.slice(0, charIndex)}
+        <div className="px-4 sm:px-5 py-3 border-b border-grid-element">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono">
+            <div className="border border-grid px-2 py-1 text-ink-secondary">Wallet: 0x...a3f7</div>
+            <div className="border border-grid px-2 py-1 text-ink-secondary">Mode: Execution</div>
+            <div className="border border-grid px-2 py-1 text-ink-secondary">Risk: Balanced</div>
+            <div className="border border-grid px-2 py-1 text-accent">Signals: LIVE</div>
+          </div>
+        </div>
+
+        <div className="p-4 sm:p-5 font-mono text-[12px] sm:text-[13px] leading-relaxed space-y-2 min-h-[220px] text-left">
+          {displayedTasks.map((task, index) => {
+            const resolvedStatus = task.finalized ? task.status : 'running'
+            const tone = toneFor(resolvedStatus)
+            return (
+              <div key={`agent-task-${index}`} className="border border-grid px-3 py-2.5">
+                <div className="flex items-center justify-between gap-3 mb-1.5">
+                  <div className="flex items-center gap-2">
+                    <span className={`w-1.5 h-1.5 rounded-full ${tone.dot}`} />
+                    <span className="text-ink">
+                      {task.title}
+                      {!task.finalized && <span className="animate-blink text-accent">▋</span>}
+                    </span>
+                  </div>
+                  <span className={`text-[10px] px-1.5 py-0.5 border ${tone.badge}`}>{tone.label}</span>
+                </div>
+                <p className="text-[11px] text-ink-tertiary">{task.detail}</p>
+              </div>
+            )
+          })}
+
+          {!sequenceComplete && (
+            <div className="text-ink-tertiary text-[11px] flex items-center gap-1.5">
               <span className="animate-blink text-accent">▋</span>
-            </div>
-          )}
-          {visibleLines >= TERMINAL_LINES.length && (
-            <div className="text-ink-tertiary flex items-center gap-1.5">
-              <span className="animate-blink text-accent">▋</span>
+              {statusLine}
             </div>
           )}
         </div>
