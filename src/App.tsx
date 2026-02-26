@@ -250,7 +250,7 @@ type DisplayedTask = {
 
 function TerminalPreview() {
   const [displayedTasks, setDisplayedTasks] = useState<DisplayedTask[]>([])
-  const [statusLine, setStatusLine] = useState(AGENT_STATUS_LINES[0])
+  const [statusLine, setStatusLine] = useState<string>(AGENT_STATUS_LINES[0])
   const [sequenceComplete, setSequenceComplete] = useState(false)
   const ref = useRef(null)
   const hasStartedRef = useRef(false)
