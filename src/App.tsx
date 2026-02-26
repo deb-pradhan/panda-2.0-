@@ -16,6 +16,7 @@ import {
   Box,
 } from 'lucide-react'
 import Prism from './components/Prism'
+import pandaLogo from './assets/PandaTerminal_mono_white_RGB_main.svg'
 
 /* ─── Shared ─── */
 
@@ -41,11 +42,8 @@ function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-[#101010] bg-card/95 backdrop-blur-sm">
       <div className="max-w-[1200px] mx-auto px-5 h-full flex items-center justify-between gap-5">
-        <a href="./" className="shrink-0 flex items-center gap-2 text-[13px] font-medium text-ink tracking-tight">
-          <div className="w-7 h-7 bg-canvas border border-grid flex items-center justify-center">
-            <span className="font-mono text-[11px] text-accent">P</span>
-          </div>
-          PANDA Terminal
+        <a href="./" className="shrink-0 flex items-center">
+          <img src={pandaLogo} alt="PANDA Terminal" className="h-7 w-auto" />
         </a>
 
         <div className="hidden md:flex items-center gap-6 text-[14px] text-ink">
@@ -55,13 +53,10 @@ function Navbar() {
           <a href="https://app.pandaterminal.com" className="hover:text-ink-secondary transition-colors">
             Backup Funds
           </a>
-          <a href="./contact-us" className="hover:text-ink-secondary transition-colors">
-            Contact Us
-          </a>
         </div>
 
         <a
-          href="#waitlist"
+          href="/#waitlist"
           className="rounded-full bg-white px-4 py-1.5 text-[13px] font-medium text-black hover:bg-white/90 transition-colors"
         >
           Join Waitlist
@@ -72,6 +67,30 @@ function Navbar() {
 }
 
 function AnnouncementPage() {
+  useEffect(() => {
+    const stylesheetId = 'getwaitlist-stylesheet'
+    const scriptId = 'getwaitlist-script'
+    const stylesheetHref = 'https://prod-waitlist-widget.s3.us-east-2.amazonaws.com/getwaitlist.min.css'
+    const scriptSrc = 'https://prod-waitlist-widget.s3.us-east-2.amazonaws.com/getwaitlist.min.js'
+
+    if (!document.getElementById(stylesheetId)) {
+      const link = document.createElement('link')
+      link.id = stylesheetId
+      link.rel = 'stylesheet'
+      link.type = 'text/css'
+      link.href = stylesheetHref
+      document.head.appendChild(link)
+    }
+
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement('script')
+      script.id = scriptId
+      script.src = scriptSrc
+      script.async = true
+      document.body.appendChild(script)
+    }
+  }, [])
+
   return (
     <main className="pt-28 pb-20 px-5">
       <section className="max-w-[820px] mx-auto border border-grid bg-card">
@@ -183,9 +202,8 @@ function AnnouncementPage() {
               Early access will open ahead of the full Q4 launch. If you want to be among the first to experience the
               future of decentralized trading, sign up for the waitlist now.
             </p>
-            <div className="border border-accent/40 bg-accent-subtle/20 px-4 py-3 font-mono text-[13px] text-accent">
-              [Join the Panda Terminal 2.0 Waitlist →]
-              <div className="text-[11px] text-ink-tertiary mt-1">(insert your waitlist link here)</div>
+            <div className="border border-accent/40 bg-accent-subtle/20 px-4 py-3">
+              <div id="getWaitlistContainer" data-waitlist_id="32566" data-widget_type="WIDGET_2" />
             </div>
             <p>
               Spots will be limited for the initial launch. Early waitlist members will get priority access, a direct
@@ -1154,38 +1172,224 @@ function WaitlistSection() {
   )
 }
 
+function TermsOfServicePage() {
+  return (
+    <main className="pt-28 pb-20 px-5">
+      <section className="max-w-[920px] mx-auto border border-grid bg-card">
+        <div className="border-b border-grid px-6 sm:px-8 py-5">
+          <p className="label-micro text-accent mb-2">Legal</p>
+          <h1 className="text-[26px] sm:text-[34px] leading-tight font-medium text-ink tracking-tight mb-2">
+            Terms of Service
+          </h1>
+          <p className="text-[14px] text-ink-secondary">
+            Please review these terms carefully before using PANDA Terminal services.
+          </p>
+        </div>
+
+        <article className="px-6 sm:px-8 py-7 space-y-8 text-[14px] text-ink-secondary leading-relaxed">
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">1. Terms of Service: PANDA Terminal</h2>
+            <p>
+              By visiting our website, creating an account, accessing or downloading PANDA Terminal, and/or using any
+              services provided by PANDA Terminal, you agree to be legally bound by these Terms of Service. Questions:
+              <a href="mailto:support@pandaterminal.com" className="text-accent hover:text-accent-hover transition-colors ml-1">
+                support@pandaterminal.com
+              </a>
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">2. General</h2>
+            <p>
+              These Terms govern your access to and use of PANDA Terminal, including websites, applications, tools, and
+              related services. Services include trading and market analysis tools, alerts, order functionality,
+              automated trading features, educational materials, and analytics.
+            </p>
+            <p className="mt-3">
+              You confirm you have legal capacity and authority, comply with applicable laws, and provide accurate
+              information. PANDA Terminal may amend these Terms and the Privacy Policy at any time.
+            </p>
+            <p className="mt-3">
+              We may restrict access in certain jurisdictions and may implement technical controls. You must not
+              circumvent restrictions, including with VPNs.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">3. Accounts and Services</h2>
+            <p>
+              Some Services require account registration. We may request additional information, refuse registration, or
+              terminate accounts at our discretion.
+            </p>
+            <p className="mt-3">
+              You must not use the Services to transmit unlawful content, impersonate others, transmit malicious code,
+              reverse engineer the Services, or violate third-party rights. You are responsible for activity under your
+              account and for safeguarding credentials.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">4. Third-Party Accounts</h2>
+            <p>
+              Certain features may connect to third-party exchange or broker accounts. You are responsible for those
+              accounts, and PANDA Terminal is not responsible for their operation, availability, or termination.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">5. Subscriptions and Pricing</h2>
+            <p>
+              Subscription plans, pricing, and features are described on our website and may be updated. Subscriptions
+              may auto-renew unless otherwise stated. Taxes may apply.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">6. Disclaimers and Limitation of Liability</h2>
+            <p>
+              Services are provided for informational and functional purposes only. PANDA Terminal does not provide
+              investment, financial, or trading advice. Use involves risk and you accept responsibility for outcomes.
+            </p>
+            <p className="mt-3">
+              To the fullest extent permitted by law, PANDA Terminal is not liable for indirect, incidental, or
+              consequential damages. Total liability is limited to fees paid in the prior twelve months.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">7. Intellectual Property</h2>
+            <p>
+              All rights in the Services, software, trademarks, and content belong to PANDA Terminal or its licensors.
+              A limited, non-transferable, non-commercial license is granted for personal use only.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">8. Confidentiality</h2>
+            <p>
+              You agree to maintain confidentiality of non-public information and to secure your credentials and
+              devices.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">9. Privacy Policy</h2>
+            <p>
+              Our Privacy Policy explains data collection and processing and forms part of these Terms.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">10. Changes to Terms</h2>
+            <p>
+              We may amend these Terms at any time. Continued use of Services after updates constitutes acceptance.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">11. Miscellaneous</h2>
+            <p>
+              These Terms are the entire agreement between you and PANDA Terminal. If any provision is invalid, the
+              remaining provisions continue in effect.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-[17px] font-medium text-ink mb-3">12. Governing Law and Dispute Resolution</h2>
+            <p>
+              These Terms are governed by English law. Disputes are subject to the exclusive jurisdiction of the courts
+              of England, unless PANDA Terminal elects arbitration.
+            </p>
+          </section>
+        </article>
+      </section>
+    </main>
+  )
+}
+
 /* ─── Footer ─── */
 
 function Footer() {
   return (
     <footer className="bg-card border-t border-[#101010] px-5 py-14 sm:py-20">
       <div className="max-w-[1200px] mx-auto">
-        <h3 className="text-[28px] sm:text-[42px] md:text-[52px] leading-[1.05] tracking-[-0.02em] font-medium text-ink max-w-[780px]">
-          Turn unstructured market data into high-conviction trades
-        </h3>
-
-        <a
-          href="#waitlist"
-          className="mt-8 inline-flex rounded-full bg-white px-5 py-2 text-[13px] font-medium text-black hover:bg-white/90 transition-colors"
-        >
-          Join Waitlist
-        </a>
-
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-[520px]">
-          <div className="space-y-3">
-            <p className="label-micro text-ink-tertiary">Menu</p>
-            <a href="./" className="block text-[14px] text-ink hover:text-ink-secondary transition-colors">Home</a>
-            <a href="./contact-us" className="block text-[14px] text-ink hover:text-ink-secondary transition-colors">Contact Us</a>
-          </div>
-
-          <div className="space-y-3">
-            <p className="label-micro text-ink-tertiary">About</p>
-            <a href="./termsofservice" className="block text-[14px] text-ink hover:text-ink-secondary transition-colors">Terms of Service</a>
-            <a href="./privacy-policy" className="block text-[14px] text-ink hover:text-ink-secondary transition-colors">Privacy Policy</a>
+        <div className="border border-grid bg-subtle/30 p-6 sm:p-8 mb-12">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <div>
+              <p className="label-micro text-accent mb-3">Ready to trade smarter</p>
+              <h3 className="text-[28px] sm:text-[40px] md:text-[48px] leading-[1.05] tracking-[-0.02em] font-medium text-ink max-w-[760px]">
+                Turn unstructured market data into high-conviction trades
+              </h3>
+            </div>
           </div>
         </div>
 
-        <p className="mt-14 text-[12px] text-ink-tertiary">© 2026 PANDA Terminal. All rights reserved.</p>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+          <div className="md:col-span-5">
+            <a href="./" className="inline-flex items-center mb-4">
+              <img src={pandaLogo} alt="PANDA Terminal" className="h-7 w-auto" />
+            </a>
+            <p className="text-[14px] text-ink-tertiary max-w-sm leading-relaxed">
+              Execution-first infrastructure for modern crypto traders across DEXes, perps, and options venues.
+            </p>
+          </div>
+
+          <div className="md:col-span-2 space-y-3">
+            <p className="label-micro text-ink-tertiary">Menu</p>
+            <a href="./" className="block text-[14px] text-ink hover:text-ink-secondary transition-colors">Home</a>
+            <a href="/announcement" className="block text-[14px] text-ink hover:text-ink-secondary transition-colors">Announcement</a>
+          </div>
+
+          <div className="md:col-span-3 space-y-3">
+            <p className="label-micro text-ink-tertiary">Legal</p>
+            <a href="/termsofservice" className="block text-[14px] text-ink hover:text-ink-secondary transition-colors">Terms of Service</a>
+            <a href="./privacy-policy" className="block text-[14px] text-ink hover:text-ink-secondary transition-colors">Privacy Policy</a>
+          </div>
+
+          <div className="md:col-span-2 space-y-3">
+            <p className="label-micro text-ink-tertiary">Social</p>
+            <div className="space-y-2">
+              <a
+                href="https://x.com/pandaterminal"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-[13px] text-ink-tertiary hover:text-ink transition-colors"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4 h-4 fill-current">
+                  <path d="M18.901 1H22l-6.764 7.73L23.2 23h-6.241l-4.889-6.38L6.49 23H3.39l7.233-8.267L.8 1h6.4l4.42 5.816L18.901 1zm-1.094 20.132h1.717L6.266 2.79H4.424l13.383 18.342z" />
+                </svg>
+                X
+              </a>
+              <a
+                href="https://t.me/pandaterminal"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-[13px] text-ink-tertiary hover:text-ink transition-colors"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4 h-4 fill-current">
+                  <path d="M9.036 15.804 8.66 21.1c.538 0 .771-.232 1.05-.51l2.52-2.41 5.223 3.825c.958.529 1.633.252 1.892-.882l3.43-16.077.001-.001c.304-1.42-.513-1.976-1.446-1.629L1.333 11.04C-.03 11.569-.01 12.33 1.101 12.673l5.11 1.593L18.11 6.77c.56-.37 1.07-.166.651.204" />
+                </svg>
+                Telegram
+              </a>
+              <a
+                href="https://www.linkedin.com/company/panda-terminal"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-[13px] text-ink-tertiary hover:text-ink transition-colors"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="w-4 h-4 fill-current">
+                  <path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5 2.5 2.5 0 0 0 4.98 3.5ZM3 9h4v12H3zM9 9h3.8v1.7h.1c.53-1 1.82-2.06 3.75-2.06C20.4 8.64 21 11.1 21 14.2V21h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.56-2.3 3.17V21H9z" />
+                </svg>
+                LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 pt-5 border-t border-grid flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <p className="text-[12px] text-ink-tertiary">© 2026 PANDA Terminal. All rights reserved.</p>
+          <p className="text-[12px] font-mono text-ink-tertiary">Built for execution.</p>
+        </div>
       </div>
     </footer>
   )
@@ -1198,12 +1402,15 @@ export default function App() {
     ? window.location.pathname.replace(/\/+$/, '') || '/'
     : '/'
   const isAnnouncementPage = normalizedPath === '/announcement'
+  const isTermsPage = normalizedPath === '/termsofservice'
 
   return (
     <div className="min-h-screen bg-canvas text-ink">
       <Navbar />
       {isAnnouncementPage ? (
         <AnnouncementPage />
+      ) : isTermsPage ? (
+        <TermsOfServicePage />
       ) : (
         <>
           <HeroSection />
