@@ -691,13 +691,7 @@ function CrowdedLandscape() {
   return (
     <svg viewBox="0 0 160 122" fill="none" className="w-full" aria-hidden>
       {crowdedBlocks.map((b, i) => (
-        <motion.g
-          key={b.label}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.15, delay: 0.02 * i }}
-        >
+        <g key={b.label}>
           <rect
             x={b.x} y={b.y} width={b.w} height={b.h}
             fill={i >= 16 ? '#1A0A0A' : '#0F0F0F'}
@@ -713,20 +707,15 @@ function CrowdedLandscape() {
           >
             {b.label}
           </text>
-        </motion.g>
+        </g>
       ))}
       {/* Compression arrows on edges */}
-      <motion.g
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 0.4 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.6 }}
-      >
+      <g opacity="0.4">
         <polygon points="160,40 155,35 155,45" fill="#FF3333" />
         <polygon points="0,80 5,75 5,85" fill="#FF3333" />
         <polygon points="80,122 75,117 85,117" fill="#FF3333" />
         <polygon points="80,0 75,5 85,5" fill="#FF3333" />
-      </motion.g>
+      </g>
     </svg>
   )
 }
@@ -742,35 +731,24 @@ function OpenLandscape() {
         <line key={`v${x}`} x1={x} y1="0" x2={x} y2="122" stroke="#141414" strokeWidth="0.5" />
       ))}
       {/* A few scattered tiny blocks — the only existing players */}
-      <motion.rect
+      <rect
         x="105" y="72" width="28" height="14"
         fill="#0F0F0F" stroke="#262626" strokeWidth="0.5"
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-        viewport={{ once: true }} transition={{ delay: 0.5 }}
       />
       <text x="119" y="82" textAnchor="middle" fill="#333" fontSize="4.5" fontFamily="monospace">Basic OMS</text>
-      <motion.rect
+      <rect
         x="22" y="30" width="24" height="14"
         fill="#0F0F0F" stroke="#262626" strokeWidth="0.5"
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-        viewport={{ once: true }} transition={{ delay: 0.6 }}
       />
       <text x="34" y="40" textAnchor="middle" fill="#333" fontSize="4.5" fontFamily="monospace">DEX agg</text>
-      <motion.rect
+      <rect
         x="70" y="95" width="22" height="14"
         fill="#0F0F0F" stroke="#262626" strokeWidth="0.5"
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-        viewport={{ once: true }} transition={{ delay: 0.7 }}
       />
       <text x="81" y="105" textAnchor="middle" fill="#333" fontSize="4.5" fontFamily="monospace">Perps</text>
 
       {/* Panda entering — the blue block */}
-      <motion.g
-        initial={{ opacity: 0, x: -10 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.9, duration: 0.5 }}
-      >
+      <g>
         <rect
           x="60" y="40" width="40" height="20"
           fill="#001A4D" fillOpacity="0.3" stroke="#1464FF" strokeWidth="1"
@@ -785,7 +763,7 @@ function OpenLandscape() {
         <rect x="60" y="40" width="40" height="20" fill="none" stroke="#1464FF" strokeWidth="0.5" opacity="0.3">
           <animate attributeName="opacity" values="0.3;0;0.3" dur="2.5s" repeatCount="indefinite" />
         </rect>
-      </motion.g>
+      </g>
     </svg>
   )
 }
