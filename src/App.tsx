@@ -608,7 +608,7 @@ function HeroSection() {
       </div>
       {/* Gradient overlay to fade the prism towards edges */}
       <div className="absolute inset-0 bg-gradient-to-b from-canvas/30 via-transparent to-canvas pointer-events-none" />
-      <div className="flex-1 flex items-center justify-center px-5 pt-12">
+      <div className="flex-1 flex items-start md:items-center justify-center px-5 pt-24 sm:pt-28 md:pt-16">
         <div className="max-w-3xl mx-auto text-center relative z-10">
           <Reveal>
             <div className="inline-flex items-center gap-2 border border-grid bg-card px-3 py-1.5 mb-8">
@@ -1017,13 +1017,28 @@ function FeaturesSection() {
               </p>
               {/* Mini sparkline */}
               <svg viewBox="0 0 160 32" className="w-full" fill="none" aria-hidden>
-                <polyline
+                <motion.polyline
                   points="0,28 20,22 40,25 60,15 80,18 100,8 120,12 140,4 160,10"
                   stroke="#1464FF"
-                  strokeWidth="2"
+                  strokeWidth="1.25"
                   fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ pathLength: 0, opacity: 0.45 }}
+                  whileInView={{ pathLength: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.1, ease: 'easeOut' }}
                 />
-                <circle cx="160" cy="10" r="2.5" fill="#1464FF" />
+                <motion.circle
+                  cx="160"
+                  cy="10"
+                  r="2.2"
+                  fill="#1464FF"
+                  initial={{ scale: 0.9, opacity: 0.65 }}
+                  whileInView={{ scale: [0.9, 1.15, 0.9], opacity: [0.65, 1, 0.65] }}
+                  viewport={{ once: false }}
+                  transition={{ duration: 1.8, repeat: Number.POSITIVE_INFINITY, ease: 'easeInOut' }}
+                />
               </svg>
             </div>
           </Reveal>
@@ -1260,7 +1275,7 @@ function RoadmapSection() {
                   <Reveal key={p.q} delay={0.1 * i}>
                     <div className="relative pb-8 last:pb-0">
                       {/* Node */}
-                      <div className={`absolute left-[-21px] top-1 w-5 h-5 rounded-full border-2 flex items-center justify-center bg-canvas ${s.card}`}>
+                      <div className={`absolute left-[-31px] top-1 w-5 h-5 rounded-full border-2 flex items-center justify-center bg-canvas ${s.card}`}>
                         <div className={`w-2 h-2 rounded-full ${s.node.split(' ')[0]}`} />
                       </div>
 
