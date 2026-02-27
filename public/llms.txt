@@ -1,0 +1,29 @@
+# PANDA Terminal
+
+## What this site is
+PANDA Terminal is execution-first crypto trading infrastructure focused on decentralized markets.
+The platform combines cross-venue order execution, portfolio risk tooling, and embedded market intelligence.
+
+## Key pages
+- Home: https://pandaterminal.com/
+- Announcement: https://pandaterminal.com/announcement
+- Terms of Service: https://pandaterminal.com/termsofservice
+- Privacy Policy: https://pandaterminal.com/privacy-policy
+
+## Product snapshot
+- One wallet, multiple venues (DEXes, perps, options)
+- Decentralized-first execution workflows
+- Institutional-grade risk and operations tooling
+- Integrated analytics at point of execution
+
+## Primary audience
+Professional and advanced crypto traders, trading teams, and execution-focused market participants.
+
+## Primary intent
+Learn about PANDA Terminal 2.0 and join the early access community.
+
+## Contact and channels
+- Website: https://pandaterminal.com
+- X: https://x.com/pandaterminal
+- Telegram: https://t.me/pandaterminal
+- LinkedIn: https://www.linkedin.com/company/panda-terminal

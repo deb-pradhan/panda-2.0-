@@ -18,6 +18,169 @@ import {
 import Prism from './components/Prism'
 import pandaLogo from './assets/PandaTerminal_mono_white_RGB_main.svg'
 
+type RouteSeo = {
+  title: string
+  description: string
+  path: string
+  ogType: 'website' | 'article'
+}
+
+const SITE_URL = 'https://pandaterminal.com'
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-share-image.png`
+
+const SEO_BY_PATH: Record<string, RouteSeo> = {
+  '/': {
+    title: 'PANDA Terminal 2.0 | Execution-First Crypto Trading Infrastructure',
+    description:
+      'PANDA Terminal 2.0 is execution-first crypto trading infrastructure for modern desks: one wallet, cross-venue DeFi execution, and integrated market intelligence.',
+    path: '/',
+    ogType: 'website',
+  },
+  '/announcement': {
+    title: 'PANDA Terminal 2.0 Announcement | Built for Execution',
+    description:
+      'Read the official PANDA Terminal 2.0 announcement and roadmap: one wallet, every venue, decentralized-first execution, and early access details.',
+    path: '/announcement',
+    ogType: 'article',
+  },
+  '/termsofservice': {
+    title: 'Terms of Service | PANDA Terminal',
+    description:
+      'Read the PANDA Terminal Terms of Service covering platform usage, accounts, subscriptions, risk disclosures, and legal terms.',
+    path: '/termsofservice',
+    ogType: 'website',
+  },
+  '/privacy-policy': {
+    title: 'Privacy Policy | PANDA Terminal',
+    description:
+      'Read the PANDA Terminal Privacy Policy, including data categories, processing purposes, retention, sharing, and your rights.',
+    path: '/privacy-policy',
+    ogType: 'website',
+  },
+}
+
+const BASE_ORGANIZATION_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'PANDA Terminal',
+      url: SITE_URL,
+      logo: `${SITE_URL}/panda.svg`,
+      sameAs: [
+        'https://x.com/pandaterminal',
+        'https://t.me/pandaterminal',
+        'https://www.linkedin.com/company/panda-terminal',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: 'PANDA Terminal',
+      description:
+        'Execution-first crypto trading infrastructure for modern traders across DEXes, perps, and options venues.',
+      publisher: {
+        '@id': `${SITE_URL}/#organization`,
+      },
+      inLanguage: 'en',
+    },
+  ],
+}
+
+function ensureMetaTag(attribute: 'name' | 'property', key: string) {
+  let tag = document.head.querySelector(`meta[${attribute}="${key}"]`) as HTMLMetaElement | null
+  if (!tag) {
+    tag = document.createElement('meta')
+    tag.setAttribute(attribute, key)
+    document.head.appendChild(tag)
+  }
+  return tag
+}
+
+function ensureLinkTag(rel: string) {
+  let tag = document.head.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement | null
+  if (!tag) {
+    tag = document.createElement('link')
+    tag.setAttribute('rel', rel)
+    document.head.appendChild(tag)
+  }
+  return tag
+}
+
+function setJsonLdScript(id: string, payload: Record<string, unknown>) {
+  let script = document.head.querySelector(`script[data-seo-id="${id}"]`) as HTMLScriptElement | null
+  if (!script) {
+    script = document.createElement('script')
+    script.type = 'application/ld+json'
+    script.setAttribute('data-seo-id', id)
+    document.head.appendChild(script)
+  }
+  script.textContent = JSON.stringify(payload)
+}
+
+function applySeoForPath(pathname: string) {
+  const seo = SEO_BY_PATH[pathname] ?? SEO_BY_PATH['/']
+  const canonicalUrl = `${SITE_URL}${seo.path}`
+  const twitterDescription = `${seo.description.slice(0, 197)}${seo.description.length > 197 ? '...' : ''}`
+
+  document.title = seo.title
+
+  ensureMetaTag('name', 'description').setAttribute('content', seo.description)
+  ensureMetaTag('name', 'robots').setAttribute(
+    'content',
+    'index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1',
+  )
+  ensureMetaTag('name', 'application-name').setAttribute('content', 'PANDA Terminal')
+  ensureMetaTag('name', 'twitter:card').setAttribute('content', 'summary_large_image')
+  ensureMetaTag('name', 'twitter:title').setAttribute('content', seo.title)
+  ensureMetaTag('name', 'twitter:description').setAttribute('content', twitterDescription)
+  ensureMetaTag('name', 'twitter:image').setAttribute('content', DEFAULT_OG_IMAGE)
+  ensureMetaTag('name', 'twitter:url').setAttribute('content', canonicalUrl)
+
+  ensureMetaTag('property', 'og:type').setAttribute('content', seo.ogType)
+  ensureMetaTag('property', 'og:site_name').setAttribute('content', 'PANDA Terminal')
+  ensureMetaTag('property', 'og:title').setAttribute('content', seo.title)
+  ensureMetaTag('property', 'og:description').setAttribute('content', seo.description)
+  ensureMetaTag('property', 'og:image').setAttribute('content', DEFAULT_OG_IMAGE)
+  ensureMetaTag('property', 'og:image:width').setAttribute('content', '1024')
+  ensureMetaTag('property', 'og:image:height').setAttribute('content', '576')
+  ensureMetaTag('property', 'og:url').setAttribute('content', canonicalUrl)
+  ensureMetaTag('property', 'og:locale').setAttribute('content', 'en_US')
+
+  ensureLinkTag('canonical').setAttribute('href', canonicalUrl)
+
+  setJsonLdScript('organization', BASE_ORGANIZATION_SCHEMA)
+
+  if (pathname === '/announcement') {
+    setJsonLdScript('page', {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: 'Panda Terminal 2.0 - Built for Execution',
+      description: seo.description,
+      mainEntityOfPage: canonicalUrl,
+      author: {
+        '@type': 'Organization',
+        name: 'PANDA Terminal',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'PANDA Terminal',
+        logo: {
+          '@type': 'ImageObject',
+          url: `${SITE_URL}/panda.svg`,
+        },
+      },
+      image: DEFAULT_OG_IMAGE,
+    })
+    return
+  }
+
+  const pageScript = document.head.querySelector('script[data-seo-id="page"]')
+  pageScript?.remove()
+}
+
 /* ─── Shared ─── */
 
 function Reveal({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
@@ -1618,6 +1781,11 @@ export default function App() {
   const isAnnouncementPage = normalizedPath === '/announcement'
   const isTermsPage = normalizedPath === '/termsofservice'
   const isPrivacyPage = normalizedPath === '/privacy-policy'
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    applySeoForPath(normalizedPath)
+  }, [normalizedPath])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
