@@ -9,7 +9,7 @@ const distDir = path.join(projectRoot, 'dist')
 const baseHtmlPath = path.join(distDir, 'index.html')
 
 const SITE_URL = 'https://pandaterminal.com'
-const OG_IMAGE = `${SITE_URL}/og-share-image.png`
+const OG_IMAGE = `${SITE_URL}/og-share-image.jpg`
 
 const ROUTES = [
   {
@@ -98,12 +98,20 @@ function transformHtml(baseHtml, routeConfig) {
   )
   html = setMetaByName(html, 'twitter:title', routeConfig.title)
   html = setMetaByName(html, 'twitter:url', canonicalUrl)
+  html = setMetaByName(html, 'twitter:site', '@pandaterminal')
+  html = setMetaByName(html, 'twitter:image', OG_IMAGE)
+  html = setMetaByName(html, 'twitter:image:alt', 'PANDA Terminal 2.0 preview')
 
   html = setMetaByProperty(html, 'og:type', routeConfig.ogType)
   html = setMetaByProperty(html, 'og:title', routeConfig.title)
   html = setMetaByProperty(html, 'og:description', routeConfig.description)
   html = setMetaByProperty(html, 'og:url', canonicalUrl)
   html = setMetaByProperty(html, 'og:image', OG_IMAGE)
+  html = setMetaByProperty(html, 'og:image:secure_url', OG_IMAGE)
+  html = setMetaByProperty(html, 'og:image:type', 'image/jpeg')
+  html = setMetaByProperty(html, 'og:image:width', '1200')
+  html = setMetaByProperty(html, 'og:image:height', '671')
+  html = setMetaByProperty(html, 'og:image:alt', 'PANDA Terminal 2.0 preview')
 
   if (routeConfig.articleJsonLd) {
     html = setOrInsertPageJsonLd(html, routeConfig.articleJsonLd)

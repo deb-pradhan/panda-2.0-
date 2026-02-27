@@ -26,7 +26,7 @@ type RouteSeo = {
 }
 
 const SITE_URL = 'https://pandaterminal.com'
-const DEFAULT_OG_IMAGE = `${SITE_URL}/og-share-image.png`
+const DEFAULT_OG_IMAGE = `${SITE_URL}/og-share-image.jpg`
 
 const SEO_BY_PATH: Record<string, RouteSeo> = {
   '/': {
@@ -134,9 +134,11 @@ function applySeoForPath(pathname: string) {
   )
   ensureMetaTag('name', 'application-name').setAttribute('content', 'PANDA Terminal')
   ensureMetaTag('name', 'twitter:card').setAttribute('content', 'summary_large_image')
+  ensureMetaTag('name', 'twitter:site').setAttribute('content', '@pandaterminal')
   ensureMetaTag('name', 'twitter:title').setAttribute('content', seo.title)
   ensureMetaTag('name', 'twitter:description').setAttribute('content', twitterDescription)
   ensureMetaTag('name', 'twitter:image').setAttribute('content', DEFAULT_OG_IMAGE)
+  ensureMetaTag('name', 'twitter:image:alt').setAttribute('content', 'PANDA Terminal 2.0 preview')
   ensureMetaTag('name', 'twitter:url').setAttribute('content', canonicalUrl)
 
   ensureMetaTag('property', 'og:type').setAttribute('content', seo.ogType)
@@ -144,8 +146,11 @@ function applySeoForPath(pathname: string) {
   ensureMetaTag('property', 'og:title').setAttribute('content', seo.title)
   ensureMetaTag('property', 'og:description').setAttribute('content', seo.description)
   ensureMetaTag('property', 'og:image').setAttribute('content', DEFAULT_OG_IMAGE)
-  ensureMetaTag('property', 'og:image:width').setAttribute('content', '1024')
-  ensureMetaTag('property', 'og:image:height').setAttribute('content', '576')
+  ensureMetaTag('property', 'og:image:secure_url').setAttribute('content', DEFAULT_OG_IMAGE)
+  ensureMetaTag('property', 'og:image:type').setAttribute('content', 'image/jpeg')
+  ensureMetaTag('property', 'og:image:width').setAttribute('content', '1200')
+  ensureMetaTag('property', 'og:image:height').setAttribute('content', '671')
+  ensureMetaTag('property', 'og:image:alt').setAttribute('content', 'PANDA Terminal 2.0 preview')
   ensureMetaTag('property', 'og:url').setAttribute('content', canonicalUrl)
   ensureMetaTag('property', 'og:locale').setAttribute('content', 'en_US')
 
